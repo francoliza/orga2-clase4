@@ -7,10 +7,10 @@
 struct nodo{
 	int dato;
 	struct nodo *prox;
-};
+};//struct size 16
 struct lista{
 	struct nodo *primero;
-};
+};	//stuct size 8 byte
 
 extern void borrarUltimo(struct lista *unaLista);
 extern void agregarPrimero(struct lista* unaLista, int unInt);
@@ -34,7 +34,7 @@ void destruirLista(struct lista *unaLista){
 	struct nodo * unNodo = unaLista->primero;
 	struct nodo * temp;
 	while(unNodo){
-		temp =unNodo->prox;
+		temp = unNodo->prox;
 		// borro cada nodo
 		free(unNodo);
 		unNodo = temp;
@@ -46,13 +46,13 @@ void destruirLista(struct lista *unaLista){
 int main(){
 	
 	// creo la lista
-	struct lista * lista1 = crearLista();
+	struct lista* lista1 = crearLista();
 
 	printf("Lista inicializada\n");
 	// muestro la lista
-	mostrarLista( lista1);
+	mostrarLista(lista1);
 	
-	//agrego elemtos
+	//agrego elementos
 	agregarPrimero(lista1, 4);
 	agregarPrimero(lista1, 3);
 	agregarPrimero(lista1, 5);
@@ -64,19 +64,36 @@ int main(){
 	
 	// borro Ultimo
 	borrarUltimo(lista1);
-	borrarUltimo(lista1);
-	borrarUltimo(lista1);
-	borrarUltimo(lista1);
+	//borrarUltimo(lista1);
+	//borrarUltimo(lista1);
+	//borrarUltimo(lista1);
 	
-	borrarUltimo(lista1); // borra sobre una lista sin elementos
-	
+	//borrarUltimo(lista1); // borra sobre una lista sin elementos
+
 	// muestro a la lista
 	printf("Lista sin elementos\n");
 	mostrarLista(lista1);
-	
+
+
 	// libero memoria de la lista
 	destruirLista(lista1);
 	
 	return 0;
 	
 }
+/*
+	push rbp 								;pila alineada
+	mov rbp, rsp
+	push rbx								;desalineada
+	add rsp, 8								;alineda
+	mov rbx, rdi							;puntero a la estructura
+	mov rcx, rsi							;entero por referencia 4 Bytes
+	mov rdi, SIZE_NODE
+	call malloc
+	;mov dword [rax+off_nodoDato], ecx		;pego el viejo dato
+	;mov [rax + off_nodoProx], rbx 		   	;pego el viejo nodo
+	;mov rdi, rax
+	sub rsp, 8	
+	pop rbx			
+	pop rbp
+*/
